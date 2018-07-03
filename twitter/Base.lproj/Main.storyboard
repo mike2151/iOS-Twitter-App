@@ -49,12 +49,28 @@
                         <viewLayoutGuide key="safeArea" id="osx-NC-afp"/>
                     </view>
                     <connections>
-                        <segue destination="FTQ-G1-N2b" kind="presentation" identifier="loginSegue" id="CHf-4w-b5m"/>
+                        <segue destination="hqK-Us-wvI" kind="presentation" identifier="loginSegue" id="CHf-4w-b5m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hKJ-HH-8tn" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="32.799999999999997" y="37.331334332833585"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="FTv-oX-Iy8">
+            <objects>
+                <viewController id="Vyy-mm-sZI" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ygg-kp-qBP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="0zA-Eo-XdS"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Jmz-e6-Gb0"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fbo-bW-RZQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2628" y="-831.63418290854577"/>
         </scene>
         <!--Home Timeline-->
         <scene sceneID="1Tv-nE-1AW">
@@ -81,11 +97,11 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="TwitterLogo" translatesAutoresizingMaskIntoConstraints="NO" id="juw-bv-FOQ">
-                                                    <rect key="frame" x="1" y="1" width="91" height="89"/>
+                                                    <rect key="frame" x="4" y="4" width="91" height="89"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ps-Dz-n6n">
-                                                    <rect key="frame" x="109" y="0.0" width="110" height="23"/>
+                                                    <rect key="frame" x="100" y="0.0" width="123" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                                     <nil key="textColor"/>
@@ -115,7 +131,7 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Screen Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5EM-2B-cQr">
-                                                    <rect key="frame" x="203" y="1" width="126" height="16"/>
+                                                    <rect key="frame" x="219" y="1" width="98" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                                     <nil key="textColor"/>
@@ -153,7 +169,7 @@
                                 <action selector="tapLogout:" destination="Lbl-k5-U4i" id="029-rn-zsM"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Compose" id="2Rh-b7-L8p">
+                        <barButtonItem key="rightBarButtonItem" title="Compose" image="edit-icon" id="2Rh-b7-L8p">
                             <connections>
                                 <segue destination="Uct-Sf-T9S" kind="presentation" id="GpP-JV-Y4I"/>
                             </connections>
@@ -165,7 +181,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oQh-hN-GQg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1660" y="36.431784107946029"/>
+            <point key="canvasLocation" x="2599.1999999999998" y="36.431784107946029"/>
         </scene>
         <!--Tweet-->
         <scene sceneID="Zl4-rk-tBD">
@@ -286,7 +302,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="McC-kZ-IXe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3540" y="32.833583208395808"/>
+            <point key="canvasLocation" x="4479.1999999999998" y="32.833583208395808"/>
         </scene>
         <!--Compose View Controller-->
         <scene sceneID="tfT-w7-vAO">
@@ -296,20 +312,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="RrY-GO-sFp">
-                                <rect key="frame" x="67" y="89" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="RrY-GO-sFp">
+                                <rect key="frame" x="36" y="89" width="303" height="333.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Rlw-Tr-ddQ" firstAttribute="trailing" secondItem="RrY-GO-sFp" secondAttribute="trailing" constant="36" id="F3s-9I-vKX"/>
+                            <constraint firstItem="RrY-GO-sFp" firstAttribute="top" secondItem="Rlw-Tr-ddQ" secondAttribute="top" constant="25" id="RAE-mV-Kef"/>
+                            <constraint firstItem="RrY-GO-sFp" firstAttribute="leading" secondItem="Rlw-Tr-ddQ" secondAttribute="leading" constant="36" id="bEA-ev-KH8"/>
+                            <constraint firstItem="RrY-GO-sFp" firstAttribute="height" secondItem="6Kg-DH-yky" secondAttribute="height" multiplier="0.5" id="dkb-FF-cAB"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Rlw-Tr-ddQ"/>
                     </view>
                     <navigationItem key="navigationItem" id="Biy-YW-VcM">
-                        <barButtonItem key="leftBarButtonItem" title="X" id="XDi-C4-beF"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="XDi-C4-beF">
+                            <connections>
+                                <action selector="onTapCancel:" destination="3Gi-0U-jRE" id="Xw4-5l-o4D"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Tweet" id="q0A-UK-biI">
                             <connections>
                                 <action selector="onTapPost:" destination="3Gi-0U-jRE" id="gVK-co-5G3"/>
@@ -322,12 +347,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uBm-8g-1EA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1753" y="815"/>
+            <point key="canvasLocation" x="1752.8" y="814.54272863568224"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Home-->
         <scene sceneID="WUT-Ke-VeR">
             <objects>
                 <navigationController storyboardIdentifier="TweetsNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="FTQ-G1-N2b" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Home" image="home-icon" id="QZL-QQ-j2h"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ytz-Ev-cUB">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -340,7 +366,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JHS-35-jFs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="860" y="36.431784107946029"/>
+            <point key="canvasLocation" x="1799.2" y="36.431784107946029"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qpo-dm-5ZQ">
@@ -376,13 +402,53 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lg0-Fq-uyn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2759" y="33"/>
+            <point key="canvasLocation" x="3696.8000000000002" y="32.833583208395808"/>
+        </scene>
+        <!--Profile-->
+        <scene sceneID="veu-nx-1KT">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="pbp-rZ-9f7" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Profile" image="profile-Icon" id="m7b-zx-fTP"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="WkA-o7-IW3">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Vyy-mm-sZI" kind="relationship" relationship="rootViewController" id="Rke-fM-SN6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uzM-xY-vNK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1688.8" y="-831.63418290854577"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="efL-Qx-GL8">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="hqK-Us-wvI" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="XnA-Xm-jsn">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="FTQ-G1-N2b" kind="relationship" relationship="viewControllers" id="ADa-0y-OfA"/>
+                        <segue destination="pbp-rZ-9f7" kind="relationship" relationship="viewControllers" id="wqZ-2o-TGu"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lYL-uk-Ovo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="860" y="36.431784107946029"/>
         </scene>
     </scenes>
     <resources>
         <image name="TwitterLogo" width="120" height="120"/>
         <image name="TwitterLogoBlue" width="200" height="200"/>
+        <image name="edit-icon" width="30" height="27"/>
         <image name="favor-icon" width="30" height="30"/>
+        <image name="home-icon" width="30" height="30"/>
+        <image name="profile-Icon" width="26" height="26"/>
         <image name="reply-icon" width="30" height="30"/>
         <image name="retweet-icon" width="30" height="30"/>
     </resources>

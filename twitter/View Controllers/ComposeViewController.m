@@ -37,6 +37,9 @@
         }
     }];
 }
+- (IBAction)onTapCancel:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
+}
 
 /*
 #pragma mark - Navigation
