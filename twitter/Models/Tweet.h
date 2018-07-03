@@ -20,6 +20,7 @@
 @property (nonatomic) int retweetCount;
 @property (strong, nonatomic) User *user;
 @property (strong, nonatomic) NSString *createdAtString;
+@property (strong, nonatomic) NSString *formattedCreated;
 @property (strong, nonatomic) User *retweetedByUser;
 + (NSMutableArray *)tweetsWithArray:(NSArray *)dictionaries;
 

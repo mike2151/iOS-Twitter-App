@@ -34,7 +34,8 @@
         NSDictionary *user = dictionary[@"user"];
         self.user = [[User alloc] initWithDictionary:user];
         
-        NSString *createdAtOriginalString = dictionary[@"created_at"];
+        self.createdAtString = dictionary[@"created_at"];
+        NSString *createdAtOriginalString = self.createdAtString;
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         // Configure the input format to parse the date string
         formatter.dateFormat = @"E MMM d HH:mm:ss Z y";
@@ -42,9 +43,9 @@
         NSDate *date = [formatter dateFromString:createdAtOriginalString];
         // Configure output format
         formatter.dateStyle = NSDateFormatterShortStyle;
-        formatter.timeStyle = NSDateFormatterNoStyle;
+        formatter.timeStyle = NSDateFormatterShortStyle;
         // Convert Date to String
-        self.createdAtString = [formatter stringFromDate:date];
+        self.formattedCreated = [formatter stringFromDate:date];
     }
     return self;
 }

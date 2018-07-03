@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 @property (weak, nonatomic) IBOutlet UIButton *retweetButton;
+@property (weak, nonatomic) IBOutlet UILabel *timePostedAgo;
 
 
 @property (weak, nonatomic) Tweet *tweet;
@@ -24,6 +25,7 @@
 - (IBAction)didTapFavorite:(id)sender;
 - (IBAction)didTapRetweet:(id)sender;
 - (void)refreshView;
+- (void)setTimeStamp;
 
 
 

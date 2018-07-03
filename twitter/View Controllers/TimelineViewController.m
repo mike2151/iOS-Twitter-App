@@ -16,6 +16,7 @@
 #import "ComposeViewController.h"
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "ProfileViewController.h"
 
 @interface TimelineViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, ComposeViewControllerDelegate>
 
@@ -92,6 +93,7 @@ InfiniteScrollActivityView* loadingMoreView;
     [cell.profileImage setImageWithURL:posterURL];
     cell.tweet = currTweet;
     [cell refreshView];
+    [cell setTimeStamp];
     
     return cell;
 }
@@ -181,8 +183,17 @@ InfiniteScrollActivityView* loadingMoreView;
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    ComposeViewController *composeViewController = [segue destinationViewController];
-    composeViewController.delegate = self;
+    
+    if ([segue.destinationViewController isKindOfClass:[ProfileViewController class]]) {
+        UITableViewCell *tappedCell = sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
+        ProfileViewController *profileViewController = [segue destinationViewController];
+        profileViewController.tweet = self.tweetArray[indexPath.row];
+    }
+    else {
+        ComposeViewController *composeViewController = [segue destinationViewController];
+        composeViewController.delegate = self;
+    }
 }
 
 
