@@ -7,10 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <TTTAttributedLabel/TTTAttributedLabel.h>
+#import "Tweet.h"
 
 @interface TweetCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *screenName;
-@property (weak, nonatomic) IBOutlet TTTAttributedLabel *tweet;
+@property (weak, nonatomic) IBOutlet TTTAttributedLabel *tweetText;
+@property (weak, nonatomic) IBOutlet UIImageView *profileImage;
+@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
+@property (weak, nonatomic) IBOutlet UIButton *retweetButton;
+
+
+@property (weak, nonatomic) Tweet *tweet;
+
+- (IBAction)didTapFavorite:(id)sender;
+- (IBAction)didTapRetweet:(id)sender;
+- (void)refreshView;
+
+
+
 
 @end
