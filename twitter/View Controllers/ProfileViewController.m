@@ -44,6 +44,9 @@
             }
         }];
     }
+    else {
+        [self displayUserInfo];
+    }
 }
 
 

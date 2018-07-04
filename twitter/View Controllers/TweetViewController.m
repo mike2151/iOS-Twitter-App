@@ -7,6 +7,7 @@
 //
 
 #import "TweetViewController.h"
+#import "ProfileViewController.h"
 
 
 @interface TweetViewController ()
@@ -98,6 +99,16 @@
             [self refreshView];
         }
     } isRetweeted:self.tweet.retweeted tweetId:([NSString stringWithFormat:@"%ld",self.tweet.uid])];
+}
+- (IBAction)onTapImage:(id)sender {
+    [self performSegueWithIdentifier:@"tweetToProfile" sender:self];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.destinationViewController isKindOfClass:[ProfileViewController class]]) {
+        ProfileViewController *profileViewController = [segue destinationViewController];
+        profileViewController.user = self.tweet.user;
+    }
 }
 
 @end
