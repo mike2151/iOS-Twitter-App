@@ -7,22 +7,20 @@
 //
 
 #import "ProfileViewController.h"
-#import "User.h"
-#import "UIImageView+AFNetworking.h"
 #import "APIManager.h"
+#import "UIImageView+AFNetworking.h"
+#import "TweetCell.h"
 
-@interface ProfileViewController ()
+@interface ProfileViewController () <UITableViewDelegate, UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UIImageView *bg;
+@property (weak, nonatomic) IBOutlet UIImageView *profilePic;
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *screenName;
-@property (weak, nonatomic) IBOutlet UILabel *tweetBody;
-@property (weak, nonatomic) IBOutlet UILabel *postedTime;
-@property (weak, nonatomic) IBOutlet UILabel *retweetCount;
-@property (weak, nonatomic) IBOutlet UILabel *favoriteCount;
-@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
-@property (weak, nonatomic) IBOutlet UIButton *retweetButton;
-@property (weak, nonatomic) IBOutlet UIButton *replyButton;
-@property (weak, nonatomic) IBOutlet UIImageView *profileImage;
-
+@property (weak, nonatomic) IBOutlet UILabel *location;
+@property (weak, nonatomic) IBOutlet UILabel *followersCount;
+@property (weak, nonatomic) IBOutlet UILabel *followingCount;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) NSMutableArray *tweetArray;
 
 @end
 
@@ -30,75 +28,78 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    User *user = self.tweet.user;
-    self.name.text = user.name;
-    self.screenName.text = user.screenName;
-    self.tweetBody.text = self.tweet.text;
-    self.postedTime.text = self.tweet.formattedCreated;
-    self.retweetCount.text = [NSString stringWithFormat:@"%d", self.tweet.retweetCount];
-    self.favoriteCount.text = [NSString stringWithFormat:@"%d", self.tweet.favoriteCount];
     
-    NSString *profileURL = user.profilePicURL;
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    
+    if (self.user == nil) {
+        //get the currently logged in user
+        //get the current user
+        [[APIManager shared] getCurrUser:^(User *user, NSError *error){
+            if (user) {
+                self.user = user;
+                [self displayUserInfo];
+            } else {
+                NSLog(@"😫😫😫 Error getting user: %@", error.localizedDescription);
+            }
+        }];
+    }
+}
+
+
+-(void)displayUserInfo {
+    NSURL *bgURL = [NSURL URLWithString:self.user.bgURL];
+    [self.bg setImageWithURL:bgURL];
+    NSURL *profilePic = [NSURL URLWithString:self.user.profilePicURL];
+    [self.profilePic setImageWithURL:profilePic];
+    self.profilePic.layer.zPosition = 5;
+    self.bg.layer.zPosition = -5;
+    
+    self.name.text = self.user.name;
+    self.screenName.text = [NSString stringWithFormat:@"%@%@", @"@", self.user.screenName];
+    self.location.text = self.user.location;
+    self.followersCount.text = [NSString stringWithFormat:@"%d", self.user.followers];
+    self.followingCount.text = [NSString stringWithFormat:@"%d", self.user.numFollowing];
+    
+    //get user tweets
+    [[APIManager shared] getTimelineById:^(NSArray *tweets, NSError *error) {
+        if (tweets) {
+            self.tweetArray = [NSMutableArray arrayWithArray:tweets];
+            [self.tableView reloadData];
+        }
+    } userId:self.user.strId];
+    
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.tweetArray.count;
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
+    Tweet *currTweet = self.tweetArray[indexPath.row];
+    User *owner = currTweet.user;
+    
+    //TODO make in model
+    cell.name.text = owner.name;
+    cell.tweetText.text = currTweet.text;
+    cell.screenName.text = [NSString stringWithFormat:@"%@%@", @"@", owner.screenName];
+    [cell.favoriteButton setTitle:([NSString stringWithFormat:@"%d", currTweet.favoriteCount]) forState:UIControlStateNormal];
+    [cell.retweetButton setTitle:([NSString stringWithFormat:@"%d", currTweet.retweetCount]) forState:UIControlStateNormal];
+    NSString *profileURL = owner.profilePicURL;
     NSURL *posterURL = [NSURL URLWithString:profileURL];
-    [self.profileImage setImageWithURL:posterURL];
+    [cell.profileImage setImageWithURL:posterURL];
+    cell.tweet = currTweet;
+    [cell refreshView];
+    [cell setTimeStamp];
+    cell.profileImage.layer.cornerRadius =  cell.profileImage.frame.size.height/2;
+    cell.profileImage.layer.masksToBounds = YES;
     
-    [self refreshView];
-}
-
--(void)refreshView {
-    if (self.tweet.favorited) {
-        UIImage *btnImage = [UIImage imageNamed:@"favor-icon-red.png"];
-        [self.favoriteButton setImage:btnImage forState:UIControlStateNormal];
-    }
-    else {
-        UIImage *btnImage = [UIImage imageNamed:@"favor-icon.png"];
-        [self.favoriteButton setImage:btnImage forState:UIControlStateNormal];
-    }
+    //resize according to tweettext
     
-    if (self.tweet.retweeted) {
-        UIImage *btnImage = [UIImage imageNamed:@"retweet-icon-green.png"];
-        [self.retweetButton setImage:btnImage forState:UIControlStateNormal];
-    }
-    else {
-        UIImage *btnImage = [UIImage imageNamed:@"retweet-icon.png"];
-        [self.retweetButton setImage:btnImage forState:UIControlStateNormal];
-    }
+    return cell;
 }
-
-- (IBAction)didTapFavorite:(id)sender {
-    [[APIManager shared] favorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
-        if(error){}
-        else{
-            if (self.tweet.favorited) {
-                self.tweet.favorited = NO;
-                self.tweet.favoriteCount -= 1;
-            }
-            else {
-                self.tweet.favorited = YES;
-                self.tweet.favoriteCount += 1;
-            }
-            [self refreshView];
-        }
-    } isFavorite:self.tweet.favorited];
-}
-
-- (IBAction)didTapRetweet:(id)sender {
-    [[APIManager shared] retweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
-        if(error){}
-        else{
-            if (self.tweet.retweeted) {
-                self.tweet.retweeted = NO;
-                self.tweet.retweetCount -= 1;
-            }
-            else {
-                self.tweet.retweeted = YES;
-                self.tweet.retweetCount += 1;
-            }
-            [self refreshView];
-        }
-    } isRetweeted:self.tweet.retweeted tweetId:([NSString stringWithFormat:@"%ld",self.tweet.uid])];
-}
-
 
 /*
 #pragma mark - Navigation

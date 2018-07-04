@@ -12,6 +12,12 @@
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *screenName;
 @property (strong, nonatomic) NSString *profilePicURL;
+@property (strong, nonatomic) NSString *bgURL;
+@property (strong, nonatomic) NSString *location;
+@property (strong, nonatomic) NSString *strId;
+@property (nonatomic) BOOL bgTile;
+@property (nonatomic) int followers;
+@property (nonatomic) int numFollowing;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

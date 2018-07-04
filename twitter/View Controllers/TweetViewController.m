@@ -1,25 +1,46 @@
 //
-//  TweetCell.m
+//  TweetViewController.m
 //  twitter
 //
-//  Created by Michael Abelar on 7/2/18.
+//  Created by Michael Abelar on 7/3/18.
 //  Copyright © 2018 Emerson Malca. All rights reserved.
 //
 
-#import "TweetCell.h"
-#import "APIManager.h"
+#import "TweetViewController.h"
 
-@implementation TweetCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
+@interface TweetViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *name;
+@property (weak, nonatomic) IBOutlet UILabel *screenName;
+@property (weak, nonatomic) IBOutlet UILabel *tweetBody;
+@property (weak, nonatomic) IBOutlet UILabel *postedTime;
+@property (weak, nonatomic) IBOutlet UILabel *retweetCount;
+@property (weak, nonatomic) IBOutlet UILabel *favoriteCount;
+@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
+@property (weak, nonatomic) IBOutlet UIButton *retweetButton;
+@property (weak, nonatomic) IBOutlet UIButton *replyButton;
+@property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
+@end
+
+@implementation TweetViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    User *user = self.tweet.user;
+    self.name.text = user.name;
+    self.screenName.text = user.screenName;
+    self.tweetBody.text = self.tweet.text;
+    self.postedTime.text = self.tweet.formattedCreated;
+    self.retweetCount.text = [NSString stringWithFormat:@"%d", self.tweet.retweetCount];
+    self.favoriteCount.text = [NSString stringWithFormat:@"%d", self.tweet.favoriteCount];
+    
+    NSString *profileURL = user.profilePicURL;
+    NSURL *posterURL = [NSURL URLWithString:profileURL];
+    [self.profileImage setImageWithURL:posterURL];
+    
+    [self refreshView];
 }
 
 -(void)refreshView {
@@ -78,49 +99,5 @@
         }
     } isRetweeted:self.tweet.retweeted tweetId:([NSString stringWithFormat:@"%ld",self.tweet.uid])];
 }
-
-- (void)setTimeStamp {
-    NSString *createdString = self.tweet.createdAtString;
-    NSDateFormatter * formatter =  [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"E MMM d HH:mm:ss Z y"];
-    NSDate * convrtedDate = [formatter dateFromString:createdString];    
-    NSDate *currTime = [NSDate date];
-    NSTimeInterval secondsBetween = [currTime timeIntervalSinceDate:convrtedDate];
-    
-    
-    //now go through and see weather to label as seconds, min, etc
-    NSString *label= @"";
-    
-    int secondsInHour = 3600;
-    int secondsInDay = 86400;
-    int secondsInMonth = 2592000;
-    long secondsInYear = 31104000;
-    
-    if (secondsBetween < 60) {
-        label = [NSString stringWithFormat:@"%d%@", (int) secondsBetween, @"s"];
-    }
-    else if (secondsBetween < secondsInHour) {
-        int numMin = secondsBetween / 60;
-        label = [NSString stringWithFormat:@"%d%@", numMin, @"m"];
-    }
-    else if (secondsBetween < secondsInDay) {
-        int numHour = secondsBetween / secondsInHour;
-        label = [NSString stringWithFormat:@"%d%@", numHour, @"h"];
-    }
-    else if (secondsBetween < secondsInMonth) {
-        int numDays = secondsBetween / secondsInDay;
-        label = [NSString stringWithFormat:@"%d%@", numDays, @"d"];
-    }
-    else if (secondsBetween < secondsInYear) {
-        int numMonths = secondsBetween / secondsInMonth;
-        label = [NSString stringWithFormat:@"%d%@", numMonths, @"m"];
-    }
-    else {
-        int numYears = secondsBetween / secondsInYear;
-        label = [NSString stringWithFormat:@"%d%@", numYears, @"y"];
-    }
-    self.timePostedAgo.text = label;
-}
-
 
 @end

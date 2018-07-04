@@ -16,7 +16,7 @@
 #import "ComposeViewController.h"
 #import "AppDelegate.h"
 #import "LoginViewController.h"
-#import "ProfileViewController.h"
+#import "TweetViewController.h"
 
 @interface TimelineViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, ComposeViewControllerDelegate>
 
@@ -87,13 +87,19 @@ InfiniteScrollActivityView* loadingMoreView;
     //TODO make in model
     cell.name.text = owner.name;
     cell.tweetText.text = currTweet.text;
-    cell.screenName.text = owner.screenName;
+    cell.screenName.text = [NSString stringWithFormat:@"%@%@", @"@", owner.screenName];
+    [cell.favoriteButton setTitle:([NSString stringWithFormat:@"%d", currTweet.favoriteCount]) forState:UIControlStateNormal];
+    [cell.retweetButton setTitle:([NSString stringWithFormat:@"%d", currTweet.retweetCount]) forState:UIControlStateNormal];
     NSString *profileURL = owner.profilePicURL;
     NSURL *posterURL = [NSURL URLWithString:profileURL];
     [cell.profileImage setImageWithURL:posterURL];
     cell.tweet = currTweet;
     [cell refreshView];
     [cell setTimeStamp];
+    cell.profileImage.layer.cornerRadius =  cell.profileImage.frame.size.height/2;
+    cell.profileImage.layer.masksToBounds = YES;
+    
+    //resize according to tweettext
     
     return cell;
 }
@@ -101,6 +107,7 @@ InfiniteScrollActivityView* loadingMoreView;
 - (void)beginRefresh:(UIRefreshControl *)refreshControl {
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
+            self.tweetArray = [NSMutableArray new];
             for (Tweet *tweet in tweets) {
                 [self.tweetArray addObject:tweet];
             }
@@ -184,11 +191,11 @@ InfiniteScrollActivityView* loadingMoreView;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    if ([segue.destinationViewController isKindOfClass:[ProfileViewController class]]) {
+    if ([segue.destinationViewController isKindOfClass:[TweetViewController class]]) {
         UITableViewCell *tappedCell = sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
-        ProfileViewController *profileViewController = [segue destinationViewController];
-        profileViewController.tweet = self.tweetArray[indexPath.row];
+        TweetViewController *tweetViewController = [segue destinationViewController];
+        tweetViewController.tweet = self.tweetArray[indexPath.row];
     }
     else {
         ComposeViewController *composeViewController = [segue destinationViewController];

@@ -17,6 +17,12 @@
         self.name = dictionary[@"name"];
         self.screenName = dictionary[@"screen_name"];
         self.profilePicURL = dictionary[@"profile_image_url"];
+        self.bgURL = dictionary[@"profile_banner_url"];
+        self.bgTile = dictionary[@"profile_background_tile"];
+        self.location = dictionary[@"location"];
+        self.strId = dictionary[@"id_str"];
+        self.followers = (int)[[dictionary valueForKey:@"followers_count"] integerValue];
+        self.numFollowing = (int)[[dictionary valueForKey:@"friends_count"] integerValue];
     }
     return self;
 }

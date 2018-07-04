@@ -60,9 +60,33 @@ static NSString * const consumerSecret = @"9OVCkm9IbEmIb0XcpspD8x5HwWHsHobeOR9Do
    }];
 }
 
-- (void)loadMore: (void(^)(NSArray *tweets, NSError *error))completion numTweets:(NSString*)num {
+- (void)getCurrUser:(void(^)(User *user, NSError *error))completion {
     
+    [self GET:@"1.1/account/verify_credentials.json" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable userDict) {
+        // Success
+        User *user = [[User alloc] initWithDictionary:userDict];
+        completion(user, nil);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        // There was a problem
+        completion(nil, error);
+    }];
+}
+
+- (void)loadMore: (void(^)(NSArray *tweets, NSError *error))completion numTweets:(NSString*)num {
     NSString *getURL = [NSString stringWithFormat:@"%@%@", @"1.1/statuses/home_timeline.json?count=", num];
+    [self GET:getURL
+   parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
+       // Success
+       NSMutableArray *tweets  = [Tweet tweetsWithArray:tweetDictionaries];
+       completion(tweets, nil);
+   } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+       // There was a problem
+       completion(nil, error);
+   }];
+}
+
+- (void)getTimelineById: (void(^)(NSArray *tweets, NSError *error))completion userId:(NSString*)uid {
+    NSString *getURL = [NSString stringWithFormat:@"%@%@", @"1.1/statuses/user_timeline.json?user_id=", uid];
     [self GET:getURL
    parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
        // Success

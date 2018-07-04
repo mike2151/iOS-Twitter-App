@@ -19,4 +19,6 @@
 - (void)composeTweetWith:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion;
 - (void)favorite:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion isFavorite:(BOOL)fav;
 - (void)retweet:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion isRetweeted:(BOOL)fav tweetId:(NSString*)id;
+- (void)getCurrUser:(void(^)(User *user, NSError *error))completion;
+- (void)getTimelineById: (void(^)(NSArray *tweets, NSError *error))completion userId:(NSString*)uid;
 @end

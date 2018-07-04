@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Tweet.h"
+#import "User.h"
 
 @interface ProfileViewController : UIViewController
-@property (strong, nonatomic) Tweet *tweet;
+@property (nonatomic, strong) User *user;
 @end
