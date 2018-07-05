@@ -17,6 +17,7 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "TweetViewController.h"
+#import "ProfileViewController.h"
 
 @interface TimelineViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, ComposeViewControllerDelegate>
 
@@ -98,8 +99,8 @@ InfiniteScrollActivityView* loadingMoreView;
     [cell setTimeStamp];
     cell.profileImage.layer.cornerRadius =  cell.profileImage.frame.size.height/2;
     cell.profileImage.layer.masksToBounds = YES;
+    [cell.tweetText sizeToFit];
     
-    //resize according to tweettext
     
     return cell;
 }
@@ -185,9 +186,11 @@ InfiniteScrollActivityView* loadingMoreView;
     [self logout];
 }
 
-
 #pragma mark - Navigation
 
+- (IBAction)onTap:(id)sender {
+    [self performSegueWithIdentifier:@"timelineToProfile" sender:self];
+}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
@@ -196,6 +199,13 @@ InfiniteScrollActivityView* loadingMoreView;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
         TweetViewController *tweetViewController = [segue destinationViewController];
         tweetViewController.tweet = self.tweetArray[indexPath.row];
+    }
+    else if ([segue.destinationViewController isKindOfClass:[ProfileViewController class]]) {
+        UITableViewCell *tappedCell = sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
+        ProfileViewController *profileViewController = [segue destinationViewController];
+        Tweet *tweet = self.tweetArray[indexPath.row];
+        profileViewController.user = tweet.user;
     }
     else {
         ComposeViewController *composeViewController = [segue destinationViewController];

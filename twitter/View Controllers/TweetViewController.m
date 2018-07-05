@@ -13,7 +13,6 @@
 @interface TweetViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *screenName;
-@property (weak, nonatomic) IBOutlet UILabel *tweetBody;
 @property (weak, nonatomic) IBOutlet UILabel *postedTime;
 @property (weak, nonatomic) IBOutlet UILabel *retweetCount;
 @property (weak, nonatomic) IBOutlet UILabel *favoriteCount;
@@ -21,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *retweetButton;
 @property (weak, nonatomic) IBOutlet UIButton *replyButton;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
+@property (weak, nonatomic) IBOutlet UITextView *tweetBody;
 
 
 @end
@@ -41,6 +41,10 @@
     NSURL *posterURL = [NSURL URLWithString:profileURL];
     [self.profileImage setImageWithURL:posterURL];
     
+    //make text linked
+    [self.tweetBody setEditable:NO];
+    [self.tweetBody setDataDetectorTypes:UIDataDetectorTypeLink];
+
     [self refreshView];
 }
 
