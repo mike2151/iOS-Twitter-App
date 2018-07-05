@@ -8,9 +8,16 @@
 
 #import "ComposeViewController.h"
 #import "APIManager.h"
+#import <QuartzCore/QuartzCore.h>
+#import "UIImageView+AFNetworking.h"
 
-@interface ComposeViewController ()
+
+@interface ComposeViewController () <UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextView *textView;
+@property (weak, nonatomic) IBOutlet UILabel *remainingCharsLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *profileImage;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *screenName;
 
 @end
 
@@ -18,12 +25,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [[self.textView layer] setBorderColor:[[UIColor grayColor] CGColor]];
+    [[self.textView layer] setBorderWidth:2];
+    self.textView.delegate = self;
+    
+    if (self.user == nil) {
+        //get the profile picture
+        [[APIManager shared] getCurrUser:^(User *user, NSError *error){
+            if (user) {
+                NSURL *profilePic = [NSURL URLWithString:user.profilePicURL];
+                [self.profileImage setImageWithURL:profilePic];
+                self.nameLabel.text = user.name;
+                self.screenName.text = [NSString stringWithFormat:@"%@%@", @"@", user.screenName];
+            }
+        }];
+    }
+    
+    
+    
 }
 
 - (IBAction)onTapPost:(id)sender {
@@ -37,18 +56,24 @@
         }
     }];
 }
+
+- (void)textViewDidChange:(UITextView *)textView {
+    int currLength = (140 - ((int) [textView.text length]));
+    self.remainingCharsLabel.text = [NSString stringWithFormat:@"%@%d", @"Remaining Characters: ", currLength];
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    return textView.text.length + (text.length - range.length) <= 140;
+}
+
 - (IBAction)onTapCancel:(id)sender {
     [self dismissModalViewControllerAnimated:YES];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (IBAction)onTapAway:(id)sender {
+    [self.textView resignFirstResponder];
 }
-*/
+
+
 
 @end

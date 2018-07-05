@@ -575,21 +575,59 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Tweet Body" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="RrY-GO-sFp">
-                                <rect key="frame" x="36" y="89" width="303" height="333.5"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="What's happening?" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="RrY-GO-sFp">
+                                <rect key="frame" x="36" y="171" width="303" height="200"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TwitterLogo" translatesAutoresizingMaskIntoConstraints="NO" id="gv4-aE-x7l">
+                                <rect key="frame" x="36" y="79" width="77" height="77"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="77" id="Koj-uK-4Gt"/>
+                                    <constraint firstAttribute="height" constant="77" id="S6b-aw-Wge"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remaining Characters: 124" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DPo-RV-wSE">
+                                <rect key="frame" x="53" y="391" width="205.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1fm-PH-Fmt">
+                                <rect key="frame" x="128" y="79" width="55" height="24"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kr4-M3-SKX">
+                                <rect key="frame" x="128" y="107" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="1fm-PH-Fmt" firstAttribute="leading" secondItem="gv4-aE-x7l" secondAttribute="trailing" constant="15" id="C7z-w4-Lwf"/>
                             <constraint firstItem="Rlw-Tr-ddQ" firstAttribute="trailing" secondItem="RrY-GO-sFp" secondAttribute="trailing" constant="36" id="F3s-9I-vKX"/>
-                            <constraint firstItem="RrY-GO-sFp" firstAttribute="top" secondItem="Rlw-Tr-ddQ" secondAttribute="top" constant="25" id="RAE-mV-Kef"/>
+                            <constraint firstItem="DPo-RV-wSE" firstAttribute="leading" secondItem="Rlw-Tr-ddQ" secondAttribute="leading" constant="53" id="HWf-zi-Cua"/>
+                            <constraint firstItem="RrY-GO-sFp" firstAttribute="top" secondItem="gv4-aE-x7l" secondAttribute="bottom" constant="15" id="QTR-F0-J7G"/>
+                            <constraint firstItem="gv4-aE-x7l" firstAttribute="top" secondItem="Rlw-Tr-ddQ" secondAttribute="top" constant="15" id="azO-3J-dNT"/>
                             <constraint firstItem="RrY-GO-sFp" firstAttribute="leading" secondItem="Rlw-Tr-ddQ" secondAttribute="leading" constant="36" id="bEA-ev-KH8"/>
-                            <constraint firstItem="RrY-GO-sFp" firstAttribute="height" secondItem="6Kg-DH-yky" secondAttribute="height" multiplier="0.5" id="dkb-FF-cAB"/>
+                            <constraint firstItem="Kr4-M3-SKX" firstAttribute="leading" secondItem="gv4-aE-x7l" secondAttribute="trailing" constant="15" id="cKa-uh-Uyt"/>
+                            <constraint firstItem="RrY-GO-sFp" firstAttribute="height" secondItem="6Kg-DH-yky" secondAttribute="height" multiplier="0.3" id="dkb-FF-cAB"/>
+                            <constraint firstItem="1fm-PH-Fmt" firstAttribute="top" secondItem="Rlw-Tr-ddQ" secondAttribute="top" constant="15" id="eVT-gZ-Rhh"/>
+                            <constraint firstItem="Kr4-M3-SKX" firstAttribute="top" secondItem="1fm-PH-Fmt" secondAttribute="bottom" constant="4" id="fYX-d4-9gT"/>
+                            <constraint firstItem="DPo-RV-wSE" firstAttribute="top" secondItem="RrY-GO-sFp" secondAttribute="bottom" constant="20" id="koP-J1-1uO"/>
+                            <constraint firstItem="gv4-aE-x7l" firstAttribute="leading" secondItem="Rlw-Tr-ddQ" secondAttribute="leading" constant="36" id="mrT-Xn-DyK"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Rlw-Tr-ddQ"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="b7s-dP-bMK" appends="YES" id="z3d-VO-wn0"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="Biy-YW-VcM">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="XDi-C4-beF">
@@ -604,10 +642,19 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="nameLabel" destination="1fm-PH-Fmt" id="m5o-9k-VDr"/>
+                        <outlet property="profileImage" destination="gv4-aE-x7l" id="v2u-OY-YFZ"/>
+                        <outlet property="remainingCharsLabel" destination="DPo-RV-wSE" id="api-IT-yIu"/>
+                        <outlet property="screenName" destination="Kr4-M3-SKX" id="ypJ-9J-RTr"/>
                         <outlet property="textView" destination="RrY-GO-sFp" id="Vk4-yI-c1j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uBm-8g-1EA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="b7s-dP-bMK">
+                    <connections>
+                        <action selector="onTapAway:" destination="3Gi-0U-jRE" id="FrC-qC-tCO"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1752.8" y="814.54272863568224"/>
         </scene>
