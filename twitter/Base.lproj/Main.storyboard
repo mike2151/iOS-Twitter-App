@@ -323,6 +323,19 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h0A-ac-CgB">
+                                                    <rect key="frame" x="265" y="56" width="30" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="eYm-Jd-YPe"/>
+                                                        <constraint firstAttribute="height" constant="30" id="qvD-dl-YbL"/>
+                                                    </constraints>
+                                                    <state key="normal" title="1" image="favor-icon">
+                                                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="didTapFavorite:" destination="b97-eM-Ulz" eventType="touchUpInside" id="VCl-Xt-aZf"/>
+                                                    </connections>
+                                                </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="opa-z7-fG9">
                                                     <rect key="frame" x="321" y="56" width="30" height="30"/>
                                                     <constraints>
@@ -348,17 +361,15 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h0A-ac-CgB">
-                                                    <rect key="frame" x="265" y="56" width="30" height="30"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="isa-9s-Rcw">
+                                                    <rect key="frame" x="205" y="56" width="30" height="30"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="30" id="eYm-Jd-YPe"/>
-                                                        <constraint firstAttribute="height" constant="30" id="qvD-dl-YbL"/>
+                                                        <constraint firstAttribute="height" constant="30" id="HLP-Q9-QhD"/>
+                                                        <constraint firstAttribute="width" constant="30" id="WYT-EG-IYz"/>
                                                     </constraints>
-                                                    <state key="normal" title="1" image="favor-icon">
-                                                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
+                                                    <state key="normal" title="Reply" image="reply-icon"/>
                                                     <connections>
-                                                        <action selector="didTapFavorite:" destination="b97-eM-Ulz" eventType="touchUpInside" id="VCl-Xt-aZf"/>
+                                                        <action selector="onTapReply:" destination="Lbl-k5-U4i" eventType="touchUpInside" id="WTH-na-3Uc"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -368,6 +379,7 @@
                                                 <constraint firstItem="juw-bv-FOQ" firstAttribute="top" secondItem="F5A-zw-e8b" secondAttribute="top" constant="4" id="Bf4-b6-cxm"/>
                                                 <constraint firstItem="4ps-Dz-n6n" firstAttribute="top" secondItem="juw-bv-FOQ" secondAttribute="top" id="CQw-3P-Mmg"/>
                                                 <constraint firstAttribute="trailing" secondItem="FQc-BN-WF3" secondAttribute="trailing" constant="12" id="CiY-pP-K0p"/>
+                                                <constraint firstItem="isa-9s-Rcw" firstAttribute="top" secondItem="WKR-Uj-hZR" secondAttribute="bottom" constant="15" id="G2B-Vb-XFd"/>
                                                 <constraint firstItem="WKR-Uj-hZR" firstAttribute="top" secondItem="4ps-Dz-n6n" secondAttribute="bottom" constant="1" id="OYB-If-Xl6"/>
                                                 <constraint firstItem="h0A-ac-CgB" firstAttribute="top" secondItem="WKR-Uj-hZR" secondAttribute="bottom" constant="15" id="Ujz-DG-GV4"/>
                                                 <constraint firstAttribute="trailing" secondItem="opa-z7-fG9" secondAttribute="trailing" constant="24" id="aA3-Wf-kMQ"/>
@@ -377,8 +389,10 @@
                                                 <constraint firstItem="FQc-BN-WF3" firstAttribute="leading" secondItem="5EM-2B-cQr" secondAttribute="trailing" constant="27" id="hkF-IR-nj9"/>
                                                 <constraint firstItem="5EM-2B-cQr" firstAttribute="leading" secondItem="4ps-Dz-n6n" secondAttribute="trailing" constant="17" id="iWR-wg-szp"/>
                                                 <constraint firstItem="4ps-Dz-n6n" firstAttribute="leading" secondItem="juw-bv-FOQ" secondAttribute="trailing" constant="12" id="oLL-D6-moX"/>
+                                                <constraint firstItem="h0A-ac-CgB" firstAttribute="leading" secondItem="isa-9s-Rcw" secondAttribute="trailing" constant="30" id="r99-Ew-huR"/>
                                                 <constraint firstItem="juw-bv-FOQ" firstAttribute="leading" secondItem="F5A-zw-e8b" secondAttribute="leading" constant="4" id="tc3-TV-9Dv"/>
                                                 <constraint firstItem="5EM-2B-cQr" firstAttribute="centerY" secondItem="4ps-Dz-n6n" secondAttribute="centerY" id="thG-Zm-3cm"/>
+                                                <constraint firstItem="isa-9s-Rcw" firstAttribute="centerY" secondItem="h0A-ac-CgB" secondAttribute="centerY" id="v2n-WS-YaY"/>
                                                 <constraint firstItem="opa-z7-fG9" firstAttribute="top" secondItem="h0A-ac-CgB" secondAttribute="top" id="xBM-0g-BYe"/>
                                                 <constraint firstItem="FQc-BN-WF3" firstAttribute="centerY" secondItem="5EM-2B-cQr" secondAttribute="centerY" constant="-2.5" id="xp9-0p-Ztb"/>
                                                 <constraint firstItem="WKR-Uj-hZR" firstAttribute="leading" secondItem="juw-bv-FOQ" secondAttribute="trailing" constant="8" id="ylr-Lt-Qso"/>
@@ -391,6 +405,7 @@
                                             <outlet property="favoriteButton" destination="h0A-ac-CgB" id="bWO-Ap-8B9"/>
                                             <outlet property="name" destination="4ps-Dz-n6n" id="qjL-3o-BJ3"/>
                                             <outlet property="profileImage" destination="juw-bv-FOQ" id="Jce-SN-V4n"/>
+                                            <outlet property="replyButton" destination="isa-9s-Rcw" id="C59-v3-hqP"/>
                                             <outlet property="retweetButton" destination="opa-z7-fG9" id="4Zy-qT-puE"/>
                                             <outlet property="screenName" destination="5EM-2B-cQr" id="7jK-ey-f1y"/>
                                             <outlet property="timePostedAgo" destination="FQc-BN-WF3" id="enE-WD-Gw0"/>
@@ -418,7 +433,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Compose" image="edit-icon" id="2Rh-b7-L8p">
                             <connections>
-                                <segue destination="Uct-Sf-T9S" kind="presentation" id="GpP-JV-Y4I"/>
+                                <segue destination="Uct-Sf-T9S" kind="presentation" identifier="toComposeSegue" id="GpP-JV-Y4I"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

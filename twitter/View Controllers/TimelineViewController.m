@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (assign, nonatomic) BOOL isMoreDataLoading;
 @property (nonatomic) int currTweetCount;
+@property (nonatomic) int tappedReplyButtonIndex;
 
 @end
 
@@ -37,6 +38,8 @@ InfiniteScrollActivityView* loadingMoreView;
     
     self.currTweetCount = 20;
     self.isMoreDataLoading = false;
+    
+    self.tappedReplyButtonIndex = -1;
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(beginRefresh:) forControlEvents:UIControlEventValueChanged];
@@ -60,6 +63,7 @@ InfiniteScrollActivityView* loadingMoreView;
     // Get timeline
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
+            self.tweetArray = [NSMutableArray new];
             for (Tweet *tweet in tweets) {
                 [self.tweetArray addObject:tweet];
             }
@@ -100,6 +104,8 @@ InfiniteScrollActivityView* loadingMoreView;
     cell.profileImage.layer.cornerRadius =  cell.profileImage.frame.size.height/2;
     cell.profileImage.layer.masksToBounds = YES;
     [cell.tweetText sizeToFit];
+    cell.replyButton.tag = indexPath.row;
+    [cell.replyButton addTarget:self action:@selector(onTapReply:) forControlEvents:UIControlEventTouchUpInside];
     
     
     return cell;
@@ -164,6 +170,7 @@ InfiniteScrollActivityView* loadingMoreView;
     //refresh the ui
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
+            self.tweetArray = [NSMutableArray new];
             for (Tweet *tweet in tweets) {
                 [self.tweetArray addObject:tweet];
             }
@@ -188,12 +195,20 @@ InfiniteScrollActivityView* loadingMoreView;
 
 #pragma mark - Navigation
 
+//tapping the tweet
 - (IBAction)onTap:(id)sender {
     [self performSegueWithIdentifier:@"timelineToProfile" sender:self];
 }
+- (IBAction)onTapReply:(UIButton *)sender {
+    self.tappedReplyButtonIndex = (int) sender.tag;
+    [self performSegueWithIdentifier:@"toComposeSegue" sender:self];
+}
+
+
+
+//tapping the reply button
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
     if ([segue.destinationViewController isKindOfClass:[TweetViewController class]]) {
         UITableViewCell *tappedCell = sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
@@ -208,8 +223,23 @@ InfiniteScrollActivityView* loadingMoreView;
         profileViewController.user = tweet.user;
     }
     else {
-        ComposeViewController *composeViewController = [segue destinationViewController];
-        composeViewController.delegate = self;
+        //goes to compose controller
+        //see if compose button
+        if ([sender isMemberOfClass:[UIBarButtonItem class]]) {
+            ComposeViewController *composeViewController = [segue destinationViewController];
+            composeViewController.delegate = self;
+        }
+        //a tweet is getting pressed
+        else {
+            if (self.tappedReplyButtonIndex != -1) {
+                UINavigationController *navController = [segue destinationViewController];
+                ComposeViewController *composeViewController = navController.visibleViewController;
+                composeViewController.tweet  = self.tweetArray[self.tappedReplyButtonIndex];
+                composeViewController.delegate = self;
+                self.tappedReplyButtonIndex = -1;
+            }
+        }
+        
     }
 }
 
