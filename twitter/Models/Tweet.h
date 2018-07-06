@@ -22,6 +22,7 @@
 @property (strong, nonatomic) NSString *createdAtString;
 @property (strong, nonatomic) NSString *formattedCreated;
 @property (strong, nonatomic) User *retweetedByUser;
+@property (strong, nonatomic) NSDictionary *entities;
 + (NSMutableArray *)tweetsWithArray:(NSArray *)dictionaries;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;

@@ -106,7 +106,7 @@ InfiniteScrollActivityView* loadingMoreView;
     [cell.tweetText sizeToFit];
     cell.replyButton.tag = indexPath.row;
     [cell.replyButton addTarget:self action:@selector(onTapReply:) forControlEvents:UIControlEventTouchUpInside];
-    
+    [cell setMediaImage];
     
     return cell;
 }
@@ -128,7 +128,7 @@ InfiniteScrollActivityView* loadingMoreView;
 -(void)loadMoreData{
     
     NSString* stringofInt = [NSString stringWithFormat:@"%d", self.currTweetCount];
-    
+    self.tweetArray = [NSMutableArray new];
     [[APIManager shared] loadMore:^(NSArray *tweets, NSError *error) {
         if (tweets) {
             for (Tweet *tweet in tweets) {

@@ -8,6 +8,7 @@
 
 #import "TweetCell.h"
 #import "APIManager.h"
+#import "UIImageView+AFNetworking.h"
 
 @implementation TweetCell
 
@@ -62,6 +63,23 @@
     } isFavorite:self.tweet.favorited];
 }
 
+-(void)setMediaImage {
+    NSDictionary *media = self.tweet.entities[@"media"];
+    NSString *firstUrl = @"";
+    if (media.count > 0) {
+        for (NSDictionary *mediaEntry in media) {
+            NSString *mediaType = mediaEntry[@"type"];
+            if ([mediaType isEqualToString:@"photo"]) {
+                firstUrl = mediaEntry[@"media_url"];
+                break;
+            }
+        }
+    }
+    if (firstUrl.length > 0) {
+        NSURL *picURL = [NSURL URLWithString:firstUrl];
+        [self.tweetImage setImageWithURL:picURL];
+    }
+}
 
 
 - (IBAction)didTapRetweet:(id)sender {

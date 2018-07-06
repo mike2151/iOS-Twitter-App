@@ -8,9 +8,10 @@
 
 #import "TweetViewController.h"
 #import "ProfileViewController.h"
+#import "ComposeViewController.h"
 
 
-@interface TweetViewController ()
+@interface TweetViewController () <ComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *screenName;
 @property (weak, nonatomic) IBOutlet UILabel *postedTime;
@@ -21,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *replyButton;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UITextView *tweetBody;
+@property (weak, nonatomic) IBOutlet UIImageView *tweetImage;
 
 
 @end
@@ -44,6 +46,8 @@
     //make text linked
     [self.tweetBody setEditable:NO];
     [self.tweetBody setDataDetectorTypes:UIDataDetectorTypeLink];
+    
+    [self setMediaImage];
 
     [self refreshView];
 }
@@ -108,10 +112,42 @@
     [self performSegueWithIdentifier:@"tweetToProfile" sender:self];
 }
 
+- (IBAction)onTapReply:(id)sender {
+    [self performSegueWithIdentifier:@"TweetToComposeSegue" sender:self];
+}
+
+- (void)did:(Tweet *) post {
+    
+}
+
+-(void)setMediaImage {
+    NSDictionary *media = self.tweet.entities[@"media"];
+    NSString *firstUrl = @"";
+    if (media.count > 0) {
+        for (NSDictionary *mediaEntry in media) {
+            NSString *mediaType = mediaEntry[@"type"];
+            if ([mediaType isEqualToString:@"photo"]) {
+                firstUrl = mediaEntry[@"media_url"];
+                break;
+            }
+        }
+    }
+    if (firstUrl.length > 0) {
+        NSURL *picURL = [NSURL URLWithString:firstUrl];
+        [self.tweetImage setImageWithURL:picURL];
+    }
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.destinationViewController isKindOfClass:[ProfileViewController class]]) {
         ProfileViewController *profileViewController = [segue destinationViewController];
         profileViewController.user = self.tweet.user;
+    }
+    else {
+        UINavigationController *navController = [segue destinationViewController];
+        ComposeViewController *composeViewController = navController.visibleViewController;
+        composeViewController.tweet  = self.tweet;
+        composeViewController.delegate = self;
     }
 }
 

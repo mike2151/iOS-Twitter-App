@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *retweetButton;
 @property (weak, nonatomic) IBOutlet UILabel *timePostedAgo;
 @property (weak, nonatomic) IBOutlet UIButton *replyButton;
+@property (weak, nonatomic) IBOutlet UIImageView *tweetImage;
 
 
 @property (weak, nonatomic) Tweet *tweet;
@@ -27,7 +28,7 @@
 - (IBAction)didTapRetweet:(id)sender;
 - (void)refreshView;
 - (void)setTimeStamp;
-
+-(void)setMediaImage;
 
 
 
