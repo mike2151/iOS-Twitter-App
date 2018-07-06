@@ -28,7 +28,6 @@
 - (IBAction)didTapRetweet:(id)sender;
 - (void)refreshView;
 - (void)setTimeStamp;
--(void)setMediaImage;
 
 
 

@@ -27,6 +27,8 @@
 @property (nonatomic) int currTweetCount;
 @property (nonatomic) int tappedReplyButtonIndex;
 @property (nonatomic) int selectedTabIndex;
+//variable used to keep track of already used images in feed. Seems to be an issue with images repeating
+@property (nonatomic, strong) NSMutableArray* usedImages;
 
 @end
 
@@ -38,6 +40,9 @@ InfiniteScrollActivityView* loadingMoreView;
     UITabBarController *navVC = (UITabBarController *)[[[UIApplication sharedApplication] keyWindow] rootViewController];
     self.selectedTabIndex = (int) ((unsigned long)navVC.selectedIndex);
     
+    //reset images used
+    self.usedImages = [[NSMutableArray alloc] init];
+    
     // Get timeline
     if (self.selectedTabIndex == 0) {
         [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
@@ -47,9 +52,9 @@ InfiniteScrollActivityView* loadingMoreView;
                     [self.tweetArray addObject:tweet];
                 }
                 [self.tableView reloadData];
-                
-            } else {
-                NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+            }
+            else {
+                NSLog(@"Error: %@", error.localizedDescription);
             }
         }];
     }
@@ -61,9 +66,6 @@ InfiniteScrollActivityView* loadingMoreView;
                     [self.tweetArray addObject:tweet];
                 }
                 [self.tableView reloadData];
-                
-            } else {
-                NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
             }
         }];
     }
@@ -72,15 +74,12 @@ InfiniteScrollActivityView* loadingMoreView;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //init variables for infinite scrolling
     self.currTweetCount = 20;
     self.isMoreDataLoading = false;
-    
-    self.tappedReplyButtonIndex = -1;
-    
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(beginRefresh:) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:refreshControl atIndex:0];
-    
     // Set up Infinite Scroll loading indicator
     CGRect frame = CGRectMake(0, self.tableView.contentSize.height, self.tableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight);
     loadingMoreView = [[InfiniteScrollActivityView alloc] initWithFrame:frame];
@@ -90,6 +89,9 @@ InfiniteScrollActivityView* loadingMoreView;
     UIEdgeInsets insets = self.tableView.contentInset;
     insets.bottom += InfiniteScrollActivityView.defaultHeight;
     self.tableView.contentInset = insets;
+    
+    //init variable for keeping track of which row the reply button was pressed
+    self.tappedReplyButtonIndex = -1;
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -122,6 +124,7 @@ InfiniteScrollActivityView* loadingMoreView;
     NSURL *posterURL = [NSURL URLWithString:profileURL];
     [cell.profileImage setImageWithURL:posterURL];
     cell.tweet = currTweet;
+    [self setMediaImage:cell];
     [cell refreshView];
     [cell setTimeStamp];
     cell.profileImage.layer.cornerRadius =  cell.profileImage.frame.size.height/2;
@@ -129,9 +132,16 @@ InfiniteScrollActivityView* loadingMoreView;
     [cell.tweetText sizeToFit];
     cell.replyButton.tag = indexPath.row;
     [cell.replyButton addTarget:self action:@selector(onTapReply:) forControlEvents:UIControlEventTouchUpInside];
-    [cell setMediaImage];
+    
     
     return cell;
+}
+
+-(void)setMediaImage:(TweetCell*)cell {
+    NSArray *media = cell.tweet.entities[@"media"];
+    NSString *firstUrl = media[0][@"media_url_https"];
+    NSURL *picURL = [NSURL URLWithString:firstUrl];
+    [cell.tweetImage setImageWithURL:picURL];
 }
 
 - (void)beginRefresh:(UIRefreshControl *)refreshControl {
@@ -149,9 +159,7 @@ InfiniteScrollActivityView* loadingMoreView;
 }
 
 -(void)loadMoreData{
-    
     NSString* stringofInt = [NSString stringWithFormat:@"%d", self.currTweetCount];
-    self.tweetArray = [NSMutableArray new];
     [[APIManager shared] loadMore:^(NSArray *tweets, NSError *error) {
         if (tweets) {
             for (Tweet *tweet in tweets) {
