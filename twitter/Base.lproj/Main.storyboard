@@ -266,6 +266,7 @@
                         <outlet property="bg" destination="hiH-fj-btY" id="ake-t9-kyH"/>
                         <outlet property="followersCount" destination="Naz-xs-xtI" id="XpF-rM-YjR"/>
                         <outlet property="followingCount" destination="2d8-hl-NqI" id="DbG-BC-QUD"/>
+                        <outlet property="innerView" destination="ygg-kp-qBP" id="Ibj-dd-7Ri"/>
                         <outlet property="location" destination="cBH-F6-t5C" id="cKU-rb-m3O"/>
                         <outlet property="name" destination="7I9-4C-HPD" id="rew-r4-rgZ"/>
                         <outlet property="profilePic" destination="dQM-Lz-t2R" id="RFA-Tj-Ug9"/>

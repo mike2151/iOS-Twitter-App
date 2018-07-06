@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *followersCount;
 @property (weak, nonatomic) IBOutlet UILabel *followingCount;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIView *innerView;
 @property (nonatomic, strong) NSMutableArray *tweetArray;
 
 @end
@@ -31,6 +32,10 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    
+    UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(blurProfile)];
+    [swipeGesture setDirection:UISwipeGestureRecognizerDirectionDown];
+    [[self innerView] addGestureRecognizer: swipeGesture];
     
     if (self.user == nil) {
         //get the currently logged in user
@@ -48,6 +53,29 @@
         [self displayUserInfo];
     }
 }
+
+- (UIImage *)blurredImageWithImage:(UIImage *)sourceImage{
+    CIContext *context = [CIContext contextWithOptions:nil];
+    CIImage *inputImage = [CIImage imageWithCGImage:sourceImage.CGImage];
+    CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
+    [filter setValue:inputImage forKey:kCIInputImageKey];
+    [filter setValue:[NSNumber numberWithFloat:15.0f] forKey:@"inputRadius"];
+    CIImage *result = [filter valueForKey:kCIOutputImageKey];
+    CGImageRef cgImage = [context createCGImage:result fromRect:[inputImage extent]];
+    UIImage *retVal = [UIImage imageWithCGImage:cgImage];
+    if (cgImage) {
+        CGImageRelease(cgImage);
+    }
+    return retVal;
+}
+
+-(void)blurProfile {
+    UIImage *image = [self blurredImageWithImage:self.bg.image];
+    [self.bg setImage:image];
+}
+
+     
+
 
 
 -(void)displayUserInfo {
