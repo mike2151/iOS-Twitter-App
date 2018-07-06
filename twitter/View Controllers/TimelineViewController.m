@@ -26,12 +26,48 @@
 @property (assign, nonatomic) BOOL isMoreDataLoading;
 @property (nonatomic) int currTweetCount;
 @property (nonatomic) int tappedReplyButtonIndex;
+@property (nonatomic) int selectedTabIndex;
 
 @end
 
 @implementation TimelineViewController
 
 InfiniteScrollActivityView* loadingMoreView;
+
+-(void)viewDidAppear:(BOOL)animated {
+    UITabBarController *navVC = (UITabBarController *)[[[UIApplication sharedApplication] keyWindow] rootViewController];
+    self.selectedTabIndex = (int) ((unsigned long)navVC.selectedIndex);
+    
+    // Get timeline
+    if (self.selectedTabIndex == 0) {
+        [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
+            if (tweets) {
+                self.tweetArray = [NSMutableArray new];
+                for (Tweet *tweet in tweets) {
+                    [self.tweetArray addObject:tweet];
+                }
+                [self.tableView reloadData];
+                
+            } else {
+                NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+            }
+        }];
+    }
+    else if (self.selectedTabIndex == 2) {
+        [[APIManager shared] getMentionsTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
+            if (tweets) {
+                self.tweetArray = [NSMutableArray new];
+                for (Tweet *tweet in tweets) {
+                    [self.tweetArray addObject:tweet];
+                }
+                [self.tableView reloadData];
+                
+            } else {
+                NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+            }
+        }];
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -60,19 +96,6 @@ InfiniteScrollActivityView* loadingMoreView;
     
     self.tweetArray = [[NSMutableArray alloc] init];
     
-    // Get timeline
-    [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
-        if (tweets) {
-            self.tweetArray = [NSMutableArray new];
-            for (Tweet *tweet in tweets) {
-                [self.tweetArray addObject:tweet];
-            }
-            [self.tableView reloadData];
-        
-        } else {
-            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
-        }
-    }];
 }
 
 - (void)didReceiveMemoryWarning {

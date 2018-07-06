@@ -22,4 +22,5 @@
 - (void)getCurrUser:(void(^)(User *user, NSError *error))completion;
 - (void)getTimelineById: (void(^)(NSArray *tweets, NSError *error))completion userId:(NSString*)uid;
 - (void)replyTweetWith:(NSString*)id_str text:(NSString *)text  completion:(void (^)(Tweet *, NSError *))completion;
+- (void)getMentionsTimelineWithCompletion:(void(^)(NSArray *tweets, NSError *error))completion;
 @end
