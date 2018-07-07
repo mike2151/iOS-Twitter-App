@@ -91,7 +91,14 @@ static NSString * const consumerSecret = @"9OVCkm9IbEmIb0XcpspD8x5HwWHsHobeOR9Do
    parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
        // Success
        NSMutableArray *tweets  = [Tweet tweetsWithArray:tweetDictionaries];
-       completion(tweets, nil);
+       
+       //get only new tweets
+       NSRange theRange;
+       theRange.location = [tweets count] - 10;
+       theRange.length = 10;
+       NSMutableArray *result = [[tweets subarrayWithRange:theRange] mutableCopy];
+       
+       completion(result, nil);
    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
        // There was a problem
        completion(nil, error);

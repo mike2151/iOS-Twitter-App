@@ -29,6 +29,7 @@
 @property (nonatomic) int selectedTabIndex;
 //variable used to keep track of already used images in feed. Seems to be an issue with images repeating
 @property (nonatomic, strong) NSMutableArray* usedImages;
+@property (nonatomic) int incrementValue;
 
 @end
 
@@ -73,6 +74,8 @@ InfiniteScrollActivityView* loadingMoreView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.incrementValue = 10;
     
     //init variables for infinite scrolling
     self.currTweetCount = 20;
@@ -172,7 +175,7 @@ InfiniteScrollActivityView* loadingMoreView;
     self.isMoreDataLoading = false;
     // Stop the loading indicator
     [loadingMoreView stopAnimating];
-    self.currTweetCount = self.currTweetCount + 10;
+    self.currTweetCount = self.currTweetCount + self.incrementValue;
     
 }
 
